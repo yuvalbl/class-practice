@@ -4,6 +4,45 @@
     <meta charset="UTF-8">
     <title>Github users</title>
 </head>
+
 <body>
+    
+    <button class="fetch">Click to Fetch</button>
+    <p class="output"></p>
+
+	<script>
+	const fetchButton = document.querySelector('button.fetch');
+    
+    function addUser(userData){
+        const userNode = document.createElement('article');
+        userNode.className = 'user-card';
+        userNode.innerHTML =  `
+        <div>
+            <img src="${userData.avatar_url}">
+        </div>
+        <p>
+         <a target="_blank" href="${userData.html_url}">
+            ${userData.login}
+         </a>
+        </p>
+        `
+        document.querySelector('.output').appendChild(userNode);
+    }
+
+    fetchButton.onclick  = function () {
+        console.log('fetch users');
+        fetch('https://api.github.com/users')
+            .then(response => response.json())
+            .then(function(users) {
+                users.forEach(user => {
+                    console.log(user);
+                    addUser(user);
+                });
+            })           
+    }
+
+
+	</script>
+	
 </body>
 </html>
