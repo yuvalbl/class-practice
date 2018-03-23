@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html>
+<head>
+<style>
+pre.fonting {
+    font-family: "Times New Roman";
+    font-style: normal;
+    font-size: 140%;
+}
+
+.tab {
+    overflow: hidden;
+    border: 1px solid #ccc;
+    background-color: #f1f1f1;
+}
+
+.tab button {
+    background-color: inherit;
+    float: left;
+    border: none;
+    outline: none;
+    cursor: pointer;
+    padding: 14px 16px;
+    transition: 0.3s;
+    font-size: 17px;
+}
+.tabcontent {
+    display: none;
+    padding: 6px 12px;
+    border: 1px solid #ccc;
+    border-top: none;
+}
+.tab button:hover {
+    background-color: blue;
+}
+.tab button.active {
+    background-color: blue;
+}
+
+</style>
+</head>
+<body>
+<div class="tab">
+  <button class="tablinks" onclick="openTab('Encryption')">Encryption</button>
+  <button class="tablinks" onclick="openTab('Decryption')">Decryption</button>
+</div>
+<div id="Encryption" class="tabcontent">
+<pre class="fonting" >Key:   <input id="key" type="number"></pre>
+<pre class="fonting" >Input: <input id="textToEnc" type="text"></pre>
+<p><button onclick="CeaserEnc()">Encrypt Button</button></p>
+<pre class="fonting" >Output:<input id="EncText" disabled></pre>
+</div>
+
+<div id="Decryption" class="tabcontent">
+<pre class="fonting" >Key:   <input id="key" type="number"></pre>
+<pre class="fonting" >Input: <input id="textToDc" type="text"></pre>
+<p><button onclick="CeaserDec()">Decrypt Button</button></p>
+<pre class="fonting" >Output:<input id="DecText" disabled></pre>
+</div>
+
+<script>
+    
+function openTab(buttonName) {
+    var i, tabcontent, tablinks;
+    tabcontent = document.getElementsByClassName("tabcontent");
+    for (i = 0; i < tabcontent.length; i++) {
+        tabcontent[i].style.display = "none";
+    }
+    document.getElementById(buttonName).style.display = "block";
+}
+function CeaserEnc() {
+    let i;
+    let tmp = 0;
+    let answer = "";
+    let MyKey =document.getElementById("key").value
+    let MyText =document.getElementById("textToEnc").value
+   for(i=0; i<MyText.length; i++)
+   {
+       tmp = MyText.charCodeAt(i);
+       tmp += +MyKey;
+       answer += String.fromCharCode(tmp);  
+   }
+   document.getElementById("EncText").value = answer;
+    
+              
+}
+function CeaserDec(){
+    let i;
+    let tmp = 0;
+    let answer = "";
+    let MyKey =document.getElementById("key").value
+    let MyText =document.getElementById("textToDc").value
+   for(i=0; i<MyText.length; i++)
+   {
+       tmp = MyText.charCodeAt(i);
+       tmp -= +MyKey;
+       answer += String.fromCharCode(tmp);  
+   }
+   document.getElementById("DecText").value = answer;
+    
+              
+}
+</script> 
+</body>
+</html> 
