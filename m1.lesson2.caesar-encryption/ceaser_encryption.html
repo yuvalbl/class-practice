@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Encryption-Decryption</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+   
+    <style>
+            .Header {
+                background-color:rgb(168, 227, 245);
+                float: left;
+                border:solid;
+                outline:silver;
+                cursor: pointer;
+                padding: 14px 35px;
+                font-size: 17px;
+            }
+            #title{
+                text-align: center;
+            }
+    </style>
+   
+    <script>
+            function hide_dec()
+            {
+                let elems = document.getElementsByClassName('screen');
+                let tab = document.getElementsByClassName('Header');
+                elems[0].style.display = 'block';  
+                elems[1].style.display = 'none';  
+                tab["0"].style.backgroundColor = 'Lightgreen';
+                tab["1"].style.color = 'Grey';
+                tab["0"].style.color = 'Black';             
+                tab["1"].style.backgroundColor = 'Gainsboro';
+              
+            }
+            function hide_enc()
+            {
+                let elems = document.getElementsByClassName('screen');
+                let tab = document.getElementsByClassName('Header');
+ 
+                 elems[0].style.display = 'none';               
+                 elems[1].style.display = 'block';   
+                tab["1"].style.backgroundColor = 'Lightgreen';
+                tab["0"].style.color = 'Grey';
+               tab["1"].style.color = 'Black';
+                tab["0"].style.backgroundColor = 'Gainsboro';
+            }
+            function Encrypt(){
+                const strinput = document.getElementById('input-text1').value ;
+                let stroutput = [];
+                let num = document.getElementById('Key1').value;
+              num = parseInt(num);
+              console.log(num);
+               for(let i=0;i<strinput.length;i++){                 
+                    stroutput[i] = String.fromCharCode(strinput.charCodeAt(i)+num);
+                  }       
+               stroutput = stroutput.toString().replace(/,/g,"");;
+                document.getElementById('output1').innerHTML = stroutput;
+            }
+            function Decrypt(){
+                const strinput = document.getElementById('input-text2').value ;
+                let stroutput = [];
+                let num = document.getElementById('Key2').value;
+                num = parseInt(num);
+               for(let i=0;i<strinput.length;i++){                
+                    stroutput[i] = String.fromCharCode(strinput.charCodeAt(i)-num);
+                  }       
+               stroutput = stroutput.toString().replace(/,/g,"");;
+                document.getElementById('output2').innerHTML = stroutput;
+            }
+    </script>
+</head>
+<body onload="hide_dec()">
+    <div class="tab">
+        <button id="Encrypt" class="Header" onclick="hide_dec()">Encryption</button>
+        <button id="Decrypt" class="Header" onclick="hide_enc()">Decryption</button>
+        <!--Encryption Screen -->
+        <div class="screen" style="border:royalblue; border:solid; width:310px; font-size:30px">
+            <p class="title">Encryption</p>
+            <input id="input-text1" ></input>
+            <p>Key:<input id="Key1" type="text" width="100px" ></input></p>
+            <button onclick="Encrypt()">Encrypt</button>
+            <output id="output1"></output>
+        </div>
+ 
+        <!--Decryption Screen -->
+        <div class="screen" style="border:royalblue; border:solid; width:312px; font-size:30px;">
+            <p class="title">Decryption</p>
+            <input id="input-text2"></input>
+                <p>Key:<input id="Key2" type="text" width="100px"></p>
+            <button onclick="Decrypt()">Decrypt</button>
+            <output id="output2"></output>
+        </div>
+    </div>
+</body>
+</html>
+ 
