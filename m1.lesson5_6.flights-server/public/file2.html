@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Demo File 2</title>
+    <link rel="stylesheet" type="text/css" href="file1.css">    
+    <script src="file2.js"></script>    
+</head>
+<body>
+    <section>
+            <h1>Demo File 2</h1>
+            <button>click to fetch flights JSON</button>
+    </section>
+
+
+    <section>
+        <table id="flight-table">
+                <caption>flights</caption>
+                <thead>
+                    <tr>
+                        <th>No.</th>
+                        <th>From</th>
+                        <th>To</th>
+                        <th>Departure</th>
+                        <th>Arrival</th>
+                        <th>By</th>
+                    </tr>
+                </thead>
+                <tbody></tbody>
+            </table>
+    </section>
+
+    <script>
+        const outputTable = document.querySelector('#flight-table tbody');
+
+        document.querySelector('button').onclick = function() {
+            fetch('flights.json')
+                .then(res => res.json())
+                .then(data => renderTable(data, outputTable));
+        }
+
+    </script>
+</body>
+</html>
