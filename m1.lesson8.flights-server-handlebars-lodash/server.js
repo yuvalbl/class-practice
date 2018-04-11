@@ -15,8 +15,19 @@ http.createServer(function (req, res) {
     const cType = contentTypes.get(ext);
 
     fs.readFile(fileName, function(err, data) {
-         res.writeHead(200, {'Content-Type': cType});
-		res.write(data);
+        if(err) {
+            if(err.code == 'ENOENT'){
+                res.writeHead(404, {'Content-Type': 'text/plain'});
+                res.write('Resource no found');
+            }
+            else {
+                res.writeHead(500, {'Content-Type': 'text/plain'});
+                res.write('Server Error');
+            }
+        } else {
+            res.writeHead(200, {'Content-Type': cType});
+            res.write(data);
+        }
         res.end();
     });
 }).listen(8080, function () {

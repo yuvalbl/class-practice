@@ -5,6 +5,7 @@
     <title>handlebars and lodash</title>
     <link rel="stylesheet" type="text/css" href="styles.css">    
     <script src='https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.0.11/handlebars.min.js'></script>
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.5/lodash.min.js'></script>
 </head>
 <body>
 
@@ -29,7 +30,11 @@
                     </tr>
                 </thead>
                 <tbody>
-                    No results yet (her come output of Handlebars template)
+                    <tr>
+                        <td>
+                            No results yet (her come output of Handlebars template)
+                        </td>
+                    </tr>
                 </tbody>
             </table>
     </section>
@@ -69,7 +74,8 @@
 
         // sorting
         document.querySelector('button.sort-dep').onclick = function() {
-            flightsData = flightsData.sort( (f1, f2) => new Date(f1.departure) - new Date(f2.departure));
+            flightsData = _.sortBy(flightsData, flight => new Date(flight.departure));
+
             renderTable(flightsData);
         };
     </script>
