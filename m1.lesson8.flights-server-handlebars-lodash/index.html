@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>handlebars and lodash</title>
+    <link rel="stylesheet" type="text/css" href="styles.css">    
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.0.11/handlebars.min.js'></script>
+</head>
+<body>
+
+
+    <section>
+            <h1>handlebars and lodash</h1>
+            <button class="load">click to fetch flights JSON</button>
+    </section>
+
+    <section>
+        <button class="sort-dep">Sort By Departure</button>
+        <table id="flight-table">
+                <caption>flights</caption>
+                <thead>
+                    <tr>
+                        <th>No.</th>
+                        <th>From</th>
+                        <th>To</th>
+                        <th>Departure</th>
+                        <th>Arrival</th>
+                        <th>By</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    No results yet (her come output of Handlebars template)
+                </tbody>
+            </table>
+    </section>
+
+    <script id='table-row-template' type='text/x-handlebars-template'>
+        {{#each this}}
+        <tr>
+            <td>{{id}}</td>
+            <td>{{from}}</td>
+            <td>{{to}}</td>
+            <td>{{departure}}</td>
+            <td>{{arrival}}</td>
+            <td>{{by}}</td>
+        </tr>
+        {{/each}}
+    </script>
+
+    <script>
+        const tBodyTmpl = Handlebars.compile(document.getElementById('table-row-template').innerHTML);
+
+        let flightsData = [];
+
+        document.querySelector('button.load').onclick = function() {
+            fetch('flights.json')
+                .then(res => res.json())
+                .then(data => {
+                    flightsData = data;
+                    renderTable(flightsData);
+                });
+        };
+
+
+        // render tbody with handlebars
+        function renderTable(data) {
+            document.querySelector('#flight-table tbody').innerHTML = tBodyTmpl(data);
+        }
+
+        // sorting
+        document.querySelector('button.sort-dep').onclick = function() {
+            flightsData = flightsData.sort( (f1, f2) => new Date(f1.departure) - new Date(f2.departure));
+            renderTable(flightsData);
+        };
+    </script>
+</body>
+</html>
