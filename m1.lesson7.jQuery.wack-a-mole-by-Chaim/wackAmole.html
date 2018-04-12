@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Memory</title>
+    <!-- link rel="stylesheet" type="text/css" href="./css/style.css" -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <style>
+        .container {
+            background: rgb(243, 242, 200);
+            display: flex;
+            flex-direction: row;
+        }
+
+        .cards {
+
+            line-height: 10px;
+            border: 1px solid gray;
+        }
+
+        div {
+            padding: 5px;
+        }
+
+        p {
+            text-align: center;
+            width: 80px;
+            height: 80px;
+            border: 2px black solid;
+            margin: 1px;
+            display: inline-block;
+            color: white;
+            background-color: blue;
+            visibility: visible;
+        }
+
+        input {
+            font-family: Helvetica, Arial, sans-serif;
+            font-size: 16px;
+            font-weight: bold;
+        }
+
+        .inputs {
+            line-height: 25px;
+            font-family: Helvetica, Arial, sans-serif;
+            font-size: 16px;
+            text-align: center;
+            border: 1px solid gray;
+        }
+
+        .inputs button {
+            width: 50px;
+            height: 50px;
+        }
+    </style>
+
+
+    <script>
+        let beenClicked = new Set();
+        let stopWatch = null;
+
+        const count = document.getElementById('count');
+        const match = document.getElementById('match');
+        let counter = 0;
+        let matched = 0;
+        $(document).ready(function () {
+
+
+            // onclick="renderBoard(document.querySelector('.cards'),document.getElementsByName('select'))"
+            $("#size").on('click', function (target, select) {
+
+                console.log( $("input[name=select]:checked").val());
+
+
+                let size = 1;
+                while (target.hasChildNodes()) {
+                    target.removeChild(target.firstChild);
+                }
+                select.forEach(entry => {
+                    if (entry.checked) {
+                        size = parseInt(entry.value);
+                    }
+                });
+
+                for (let i = 1; i < size + 1; i++) {
+                    const div = document.createElement('div');
+                    for (let j = 1; j < size + 1; j++) {
+                        const elmt = document.createElement('p');
+                        elmt.innerHTML = 'Click me';
+                        div.appendChild(elmt);
+                    }
+                    target.appendChild(div);
+                    $("p").dblclick(function () {
+                        $(this).css("background-color", "red");
+                    });
+                }
+                // counter = 0;
+                // count.value = counter;
+                // matched = 0;
+                // match.value = matched;
+                if (stopWatch !== null) {
+                    clearInterval(stopWatch);
+                    stopWatch = null;
+                }
+                beenClicked.clear();
+            });
+
+        });
+
+    </script>
+</head>
+
+<body>
+<div class=inputs>
+    <input type="radio" name="select" value=4><label>4 x 4</label>
+    <br>
+    <input type="radio" name="select" value=6 checked><label>6 x 6</label>
+    <br>
+    <input type="radio" name="select" value=8><label>8 x 8</label>
+    <br>
+    <button id="size">Size</button>
+</div>
+<div class="container">
+
+    <!-- the game board is inserted here into cards <div> -->
+    <div class="cards"></div>
+
+</div>
+<div class="info">
+    <h2>Instruction</h2>
+    <ol>
+        <li>Select the board size.</li>
+        <li>Match any two cards with the same icon, by clicking on them.</li>
+        <li>If you find a matched pair, these cards will stay open.</li>
+        <li>TThe game is finished when you matched the all available pairs.</li>
+    </ol>
+
+</div>
+
+<section>
+    <label>Number of Tries: </label>
+    <input id="count" type="text" value="0" size="4" disabled></input>
+    <label>Number of Sucsses: </label>
+    <input id="match" type="text" value="0" size="4" disabled></input>
+    <label>Time elapsed: </label>
+    <input id="timer" type="text" value="0" size="10" disabled></input>
+
+</section>
+</body>
+
+</html>
