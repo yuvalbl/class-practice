@@ -17,6 +17,16 @@
 
     <section>
         <button class="sort-dep">Sort By Departure</button>
+        <button class="sort-arr">Sort By Arrival</button>
+        <select id="actualSelect">
+            <option>nothing to show yet</option>
+        </select>
+        <script id='Airline-dropdown-template' type='text/x-handlebars-template'>
+            {{#each this}}
+            <option>{{by}}</option>
+            {{/each}}
+        </script>
+        <button class="sort-arg">filter by airline</button>
         <table id="flight-table">
                 <caption>flights</caption>
                 <thead>
@@ -54,8 +64,11 @@
 
     <script>
         const tBodyTmpl = Handlebars.compile(document.getElementById('table-row-template').innerHTML);
+        const selectOptionTmpl = Handlebars.compile(document.getElementById('Airline-dropdown-template').innerHTML);
 
         let flightsData = [];
+        let selectOptions = [];
+
 
         document.querySelector('button.load').onclick = function() {
             fetch('flights.json')
@@ -63,19 +76,38 @@
                 .then(data => {
                     flightsData = data;
                     renderTable(flightsData);
+                    selectOptions =  _.uniqBy(flightsData, 'by');
+                    addOption(selectOptions);
+                    console.log(selectOptions);
                 });
         };
-
 
         // render tbody with handlebars
         function renderTable(data) {
             document.querySelector('#flight-table tbody').innerHTML = tBodyTmpl(data);
         }
 
-        // sorting
+        // add option to dropdown with handlebars
+        function addOption(data) {
+            document.querySelector('#actualSelect').innerHTML = selectOptionTmpl(data);
+        }
+
+        // sorting by departure
         document.querySelector('button.sort-dep').onclick = function() {
             flightsData = _.sortBy(flightsData, flight => new Date(flight.departure));
+            renderTable(flightsData);
+        };
 
+        //sorting by arrival
+        document.querySelector('button.sort-arr').onclick = function() {
+            flightsData = _.orderBy(flightsData,['arrival'],['desc']);
+            renderTable(flightsData);
+        };
+
+        //filter according to selected option in dropdown
+        document.querySelector('button.sort-arg').onclick = function() {
+            let selectedAirline = document.getElementById("actualSelect").value;
+            flightsData = _.filter(flightsData,['by',selectedAirline]);
             renderTable(flightsData);
         };
     </script>
