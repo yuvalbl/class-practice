@@ -1,0 +1,38 @@
+body {
+    padding: 20px;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif
+}
+
+section {
+    margin: 20px 0;
+}
+
+#mapid {
+     height: 400px;
+     width: 400px;
+    }
+
+h1 {
+    color: rgb(8, 70, 88);
+    text-shadow: 0 2px 3px #555;
+}
+
+table {
+    border: 1px royalblue solid;
+    border-collapse: collapse;
+}
+
+table caption {
+    color: #222;
+    text-shadow: 0 2px 3px #555;
+    padding: 10px;
+    font-size: 20px; 
+}
+
+table thead tr {
+    border-bottom: 1px royalblue solid;
+}
+
+table td {
+    padding: 5px;
+}
