@@ -9,11 +9,12 @@
 <body>
     <section>
             <h1>Demo File 2</h1>
-            <button>click to fetch flights JSON</button>
+            <button class="load">click to fetch flights JSON</button>
     </section>
 
 
     <section>
+        <button class="sort-dep">Sort By Departure</button>
         <table id="flight-table">
                 <caption>flights</caption>
                 <thead>
@@ -31,14 +32,22 @@
     </section>
 
     <script>
+        let flightsData = [];
         const outputTable = document.querySelector('#flight-table tbody');
 
-        document.querySelector('button').onclick = function() {
+        document.querySelector('button.load').onclick = function() {
             fetch('flights.json')
                 .then(res => res.json())
-                .then(data => renderTable(data, outputTable));
-        }
+                .then(data => {
+                    flightsData = data;
+                    renderTable(flightsData, outputTable);
+                });
+        };
 
+        document.querySelector('button.sort-dep').onclick = function() {
+            flightsData.sort( (f1, f2) => (Date(f1.departure) < Date(f2.departure))  ?  1 : -1);
+            renderTable(flightsData, outputTable);
+        }
     </script>
 </body>
 </html>
